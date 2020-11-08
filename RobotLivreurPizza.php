@@ -27,11 +27,7 @@ class RobotLivreurPizza {
     // Attributs privés
 
  /** @var float $HauteurVerrin Position actuelle du verrin */
-<<<<<<< HEAD
     private $HauteurVerrin = 60;
-=======
-    private $HauteurVerrin = 40;
->>>>>>> 9bbe03a1a8d91bf3f8e6b1fdc71e92d351b234bc
 
  /** @var integer HAUTEUR_MAX Constante représentant la hauteur maximale que peut atteindre le verrin */
     private const HAUTEUR_MAX = 150;
@@ -128,15 +124,9 @@ class RobotLivreurPizza {
      */
     public function HauteurPlateau(float $Hauteur, bool $Sens) {
 
-<<<<<<< HEAD
         if ( $Sens === true ){
             if( self::HAUTEUR_MAX > $this->HauteurVerrin + $Hauteur ){
                 $this->HauteurVerrin += $Hauteur;
-=======
-        if ( $Sens ){
-            if( self::HAUTEUR_MAX > $this->HauteurVerrin + $Hauteur ){
-                $this->HauteurVerrin =+ $Hauteur;
->>>>>>> 9bbe03a1a8d91bf3f8e6b1fdc71e92d351b234bc
                 $this->AfficherMessage( sprintf( '<br>Le plateau est monté de %d cm.',
                         $Hauteur ) );
             } else {
@@ -145,11 +135,7 @@ class RobotLivreurPizza {
             }
         } else {
             if( self::HAUTEUR_MIN < $this->HauteurVerrin - $Hauteur ){
-<<<<<<< HEAD
                 $this->HauteurVerrin -= $Hauteur;
-=======
-                $this->HauteurVerrin =- $Hauteur;
->>>>>>> 9bbe03a1a8d91bf3f8e6b1fdc71e92d351b234bc
                 $this->AfficherMessage( sprintf( '<br>Le plateau est descendu de %d cm.',
                         $Hauteur ) );
             } else {
@@ -218,15 +204,9 @@ class RobotLivreurPizza {
 $Roboto1 = new RobotLivreurPizza('Jean-bernard');
 $Roboto1->Avancer(2);
 $Roboto1->TournerDroite(90);
-<<<<<<< HEAD
 $Roboto1->HauteurPlateau(10, true);
 $Roboto1->TirerPizzaSurPlateau();
 $Roboto1->HauteurPlateau(10, false);
-=======
-$Roboto1->HauteurPlateau(10, 1);
-$Roboto1->TirerPizzaSurPlateau();
-$Roboto1->HauteurPlateau(10, 0);
->>>>>>> 9bbe03a1a8d91bf3f8e6b1fdc71e92d351b234bc
 $Roboto1->TournerGauche(90);
 $Roboto1->Avancer(1.5);
 $Roboto1->TournerDroite(90);
