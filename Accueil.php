@@ -12,7 +12,6 @@ class Accueil {
 
     /**
      * Instance : Accueil - Constructeur
-     *
      * Ce constructeur construit l'instance d'un objet de type Accueil.
      * Il prend 2 paramètres : $Nom (string) et $Sexe (integer).
      *
