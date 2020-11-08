@@ -26,6 +26,18 @@ class RobotLivreurPizza {
     //Attributs publics
     // Attributs privés
 
+ /** @var float $HauteurVerrin Position actuelle du verrin */
+    private $HauteurVerrin = 60;
+
+ /** @var integer HAUTEUR_MAX Constante représentant la hauteur maximale que peut atteindre le verrin */
+    private const HAUTEUR_MAX = 150;
+
+ /** @var integer HAUTEUR_MIN Constante représentant la hauteur minimale que peut atteindre le verrin */
+    private const HAUTEUR_MIN = 40;
+
+ /** @var string $RobotName Le nom du robot */
+    private $RobotName = "";
+
     /** @var string $Message Le message affiché à l'écran. */
     private $MessageEcran = "";
 
@@ -33,76 +45,110 @@ class RobotLivreurPizza {
     private const CAPA_AFFICH = 255;
 
     /**
-     * Titre de l'aide en ligne. Exemple : Création d'un objet de type RobotLivreurPizza
-     *
-     * Description de l'aide en ligne. Exemple : À la création d'un objet de type RobotLivreurPizza...
-     *
-     * Renseigner la ligne suivante s'il y a un paramètre. Ajouter autant de ligne d'information que de paramètre de la fonction.
-     * @param <Type du paramètre> <nom de la variable : $...> <Description du paramètre : à quoi sert-il, quelle(s) valeur(s) lui donner, etc. ?>
+     * Création d'un objet de type RobotLivreurPizza
+     * 
+     * À la création d'un objet de type RobotLivreurPizza, lui fait dire son nom et une petite phrase sympathique.
+     * @param string $name Le nom de votre magnifique robot!
+     * @todo : Contrôler la valeur de $NouveauNom : VALIDER, NETTOYER, ECHAPPER (on laissera les stagiaires faire)
      */
-    public function __construct() {
-        // J'ai mis ça là, mais à vous de voir si c'est utile...
+    public function __construct($Name) {
+        $this->AfficherMessage( sprintf( "<br>Mon nom est %s. Ravi de servir votre estomac maître!",
+                        $Name) );
+        $this->RobotName = $Name;
+        
     }
 
     // Méthodes publiques
 
     /**
-     * Renseigner l'aide en ligne...
+     * Fonction pour changer le nom d'un robot.
+     * 
+     * @param string $NouveauNom Le nom qui remplacera l'ancien.
+     * @todo : Contrôler la valeur de $NouveauNom : VALIDER, NETTOYER, ECHAPPER (on laissera les stagiaires faire)
+     */
+    public function SetName( string $NouveauNom ) {
+        $this->RobotName = $NouveauNom;
+    }
+
+    /**
+     * Fonction qui permet au robot d'avancer en ligne droite sur x mètres et d'afficher la distance parcourue sur l'écran.
+     * 
+     * @param float $Distance Float qui représente la distance que le robot va parcourir.
      */
     public function Avancer( float $Distance ) {
-        $this->AfficherMessage( sprintf( 'J\'avance de %f mètres.',
+        $this->AfficherMessage( sprintf( '<br>J\'avance de %d mètres.',
                         $Distance ) );
     }
 
     /**
-     * Renseigner l'aide en ligne...
+     * Fonction qui permet au robot de reculer en ligne droite sur x mètres et d'afficher la distance parcourue sur l'écran.
+     * 
+     * @param float $Distance Float qui représente la distance que le robot va parcourir.
      */
-    public function Reculer() {
+    public function Reculer( float $Distance ) {
+        $this->AfficherMessage( sprintf( '<br>J\'avance de %d mètres.',
+                        $Distance) );
         // Le robot affiche la distance sur laquelle il recule
     }
 
     /**
-     * Renseigner l'aide en ligne...
+     * Fonction qui permet au robot de tourner sur lui-même vers la droite de x degrés et d'afficher la rotation effectuée.
+     * 
+     * @param float $Degre Float qui représente le nombre de dégrés dont le robot tournera et le sens de rotation.
      */
-    public function TournerDroite() {
+    public function TournerDroite( float $Degre) {
+        $this->AfficherMessage( sprintf( '<br>Je tourne de %d degrés à droite.',
+                        $Degre ) );
         // Le robot affiche le nombre de degrés vers la droite dont il tourne sur lui-même
     }
-
-    /**
-     * Renseigner l'aide en ligne...
+        /**
+     * Fonction qui permet au robot de tourner sur lui-même vers la gauche de x degrés et d'afficher la rotation effectuée.
+     * 
+     * @param float $Degre Float qui représente le nombre de dégrés dont le robot tournera et le sens de rotation.
      */
-    public function TournerGauche() {
+    public function TournerGauche( float $Degre ) {
+        $this->AfficherMessage( sprintf( '<br>Je tourne de %d degrés à gauche.',
+                        $Degre ) );
         // Le robot affiche le nombre de degrés vers la gauche dont il tourne sur lui-même
     }
 
     /**
-     * Renseigner l'aide en ligne...
+     * Fonction qui permet au robot de faire monter et descendre son plateau tout en vérifiant qu'il ne dépasse pas la hauteur minimale et maximale.
+     * Affiche la hauteur et la direction des déplacements du verrin.
+     * 
+     * @param float $Hauteur Float qui représente la hauteur à ajouter ou soustraire à la position actuelle du verrin.
+     * @param bool $Sens Booléen qui représente le sens de déplacement du plateau : true pour déplacer vers le haut et false pour déplacer vers le bas.
+     * @var float $HauteurVerrin La hauteur actuelle du verrin.
+     * @var integer HAUTEUR_MAX Constante représentant la hauteur maximale que peut atteindre le verrin.
+     * @var integer HAUTEUR_MIN Constante représentant la hauteur minimale que peut atteindre le verrin.
      */
-    public function MonterPlateau() {
-        # Le robot possède un plateau pour transporter la pizza.
-        # Au plus bas, le plateau est à 40cm au-dessus du sol.
-        # Le plateau est fixé sur un verrin qui peut monter ou descendre.
-        # Selon les modèles de robot, le verrin peut monter plus ou moins haut.
-        # La hauteur maximale du verrin (donc du plateau) est fixe (une constante).
-        # Je vous laisse libre de déteriner cette hauteur maximale.
-        # Il faudra vérifier que le robot ne reçoit pas un ordre de monter le plateau en dehors de la plage (hauteur minimum / hauteur maximum) possible.
-        # Le robot affiche la hauteur en centimètres à laquelle monte le plateau.
+    public function HauteurPlateau(float $Hauteur, bool $Sens) {
+
+        if ( $Sens === true ){
+            if( self::HAUTEUR_MAX > $this->HauteurVerrin + $Hauteur ){
+                $this->HauteurVerrin += $Hauteur;
+                $this->AfficherMessage( sprintf( '<br>Le plateau est monté de %d cm.',
+                        $Hauteur ) );
+            } else {
+                $this->AfficherMessage( sprintf( '<br>Impossible de monter aussi haut !') );
+                
+            }
+        } else {
+            if( self::HAUTEUR_MIN < $this->HauteurVerrin - $Hauteur ){
+                $this->HauteurVerrin -= $Hauteur;
+                $this->AfficherMessage( sprintf( '<br>Le plateau est descendu de %d cm.',
+                        $Hauteur ) );
+            } else {
+                $this->AfficherMessage( sprintf( '<br>Impossible de descendre aussi bas !') );
+            }
+        }
     }
 
     /**
-     * Renseigner l'aide en ligne...
-     */
-    public function DescendrePlateau() {
-        /* Cette méthode est-elle utile ? */
-        /* N'est-elle pas redondante avec MonterPLateau() ? */
-        /* Vous pouvez la conserver, mais sans dupliuer le code de MonterPLateau() */
-        /* ou bien renommer MonterPlateau() pour rendre le code plus lisible. */
-    }
-
-    /**
-     * Renseigner l'aide en ligne...
+     * Fonction qui permet au robot d'activer la spatule coudée pour pousser la pizza du plateau vers l'assiette et qui nous annonce le résultat.
      */
     public function PousserPizzaSurPlateau() {
+        $this->AfficherMessage( sprintf( "<br>La pizza a été déposée sur l'assiette!" ) );
         /*
          * Au bord du plateau, le robot possède une spatule coudée qui se glisse sous la pizza pour la pousser hors du plateau.
          * Le robot affiche la confirmation qu'il a poussé la pizza hors du plateau.
@@ -110,9 +156,10 @@ class RobotLivreurPizza {
     }
 
     /**
-     * Renseigner l'aide en ligne...
+     * Fonction qui permet au robot d'activer la pince qui récupère la pizza dans le four et la dépose sur son plateau et qui nous annonce le résultat.
      */
     public function TirerPizzaSurPlateau() {
+        $this->AfficherMessage( sprintf( "<br>La pizza a été tirée sur le plateau !" ) );
         /*
          * À côté du plateau, une pince permet au robot d'attraper la pizza pour la glisser sur le plateau.
          * Le robot affiche un message de confirmation que la pizza a bien était tirée et est maintenant sur le plateau.
@@ -120,7 +167,9 @@ class RobotLivreurPizza {
     }
 
     /**
-     * Renseigner l'aide en ligne...
+     * Fonction d'affichage d'un message sur l'écran du robot en passant par la fonction de test de longueur.
+     * 
+     * @param string $Message String contenant le message à afficher.
      */
     public function AfficherMessage( string $Message ) {
         $this->MessageEcran = $this->TesterLongueurMessage( $Message );
@@ -144,18 +193,28 @@ class RobotLivreurPizza {
      * @return string Valeur du message après réduction éventuelle de la longueur
      */
     private function TesterLongueurMessage( string $MessagePossible ): string {
-        if( self::CAPA_AFFICH < strlen( $MessagePossible ) ) {  // Vous pouvez modifier le code déja écrit...
-            // Ecrire le code pour réduire la taille du message si nécessaire...
+        if( self::CAPA_AFFICH < strlen( $MessagePossible ) ) {  
+            $MessagePossible = substr($MessagePossible, 0, 252) . "...";
         }
         return $MessagePossible;
     }
 
 }
 
-// Ecrivez ci-dessous le code qui sera transmis à votre robot pour aller chercher votre pizza dans le four et l'apporter à votre bureau
-// En imaginant que vous possédez ce robot, et que vous êtes installé·e à votre bureau, programmez le robot pour qu'il vous rapporte votre pizza toute chaude.
-// Donnez des ordres au robot en fonction de la réalité de votre logement.
-// Le robot peut partir de n'importe quel point (sous votre bureau, un placard, un coin de votre cuisine).
-// On considère que la porte du four est ouverte, et qu'elle n'empêche pas le robot d'atteindre la pizza.
-// Le robot doit déposer la pizza dans une assiette posée au bord de votre bureau.
-// La dernière instruction que le robot devra exécuter est de vous souhaiter un bon appétit.
+$Roboto1 = new RobotLivreurPizza('Jean-bernard');
+$Roboto1->Avancer(2);
+$Roboto1->TournerDroite(90);
+$Roboto1->HauteurPlateau(10, true);
+$Roboto1->TirerPizzaSurPlateau();
+$Roboto1->HauteurPlateau(10, false);
+$Roboto1->TournerGauche(90);
+$Roboto1->Avancer(1.5);
+$Roboto1->TournerDroite(90);
+$Roboto1->Avancer(5);
+$Roboto1->TournerGauche(90);
+$Roboto1->Avancer(2);
+$Roboto1->TournerDroite(45);
+$Roboto1->HauteurPlateau(80, 1);
+$Roboto1->PousserPizzaSurPlateau();
+$Roboto1->HauteurPlateau(80, 0);
+$Roboto1->AfficherMessage("<br>Bon appétit bien sûr!");
